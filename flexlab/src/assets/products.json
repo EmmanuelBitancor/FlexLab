@@ -1,26 +1,62 @@
 [
   {
     "id": 1,
-    "name": "Wireless Headphones",
+    "name": "Graphic Tees",
     "price": 59.99,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://www.penshoppe.com/cdn/shop/files/988877-White_4.jpg?v=1747786399&width=1080"
   },
   {
     "id": 2,
-    "name": "Smart Watch",
+    "name": "Bucket Hat",
     "price": 129.99,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://i5.walmartimages.com/seo/Bucket-Hat-For-Men-Women-Cotton-Packable-Fishing-Cap-Navy-L-XL_b9ed310f-dd6d-4fb1-a36c-688dd8207f10_1.4afc5b713cf479a1dc385c8e37ef24fd.jpeg"
   },
   {
     "id": 3,
-    "name": "USB-C Charger",
+    "name": "Tote Bag",
     "price": 19.99,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5IEV4Wk_k8PH9gpBEkQ-AWpKingPOVNQk9g&s"
   },
   {
     "id": 4,
-    "name": "Bluetooth Speaker",
+    "name": "Oversized Hoodie",
     "price": 39.99,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://down-ph.img.susercontent.com/file/039216de90392552444cf3344ae48276"
+  },
+  {
+    "id": 5,
+    "name": "Mininmalist Tees",
+    "price": 39.99,
+    "image": "https://down-ph.img.susercontent.com/file/ph-11134207-7r98q-lxhpanztk8p037"
+  },
+  {
+    "id": 6,
+    "name": "Windbreaker Jacket",
+    "price": 89.99,
+    "image": "https://media-assets.grailed.com/prd/listing/temp/32529f8ca7dd4c3a8ffbafeabca7497d"
+  },
+  {
+    "id": 7,
+    "name": "Cargo Pants",
+    "price": 79.99,
+    "image": "https://media.powerlook.in/catalog/product/3/1/31139560.jpg?aio=w-640"
+  },
+  {
+    "id": 8,
+    "name": "Croptop Hoodie",
+    "price": 49.99,
+    "image": "https://down-ph.img.susercontent.com/file/ac02950f192a30633250c8018c4cc44c"
+  },
+  {
+    "id": 9,
+    "name": "Oversized T-Shirt",
+    "price": 99.99,
+    "image": "https://static.nike.com/a/images/f_auto/dpr_3.0,cs_srgb/h_484,c_limit/0916c79b-3f18-4281-b6cd-c712d54249ac/how-to-style-a-nike-oversized-t-shirt.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Sneakers",
+    "price": 129.99,
+    "image": "https://www.usatoday.com/gcdn/presto/2023/03/10/USAT/7e9a451e-ca0f-4b8d-afe8-48461971f635-Amazon-Mens-Sneakers_Hero.png?crop=2987,1680,x12,y0"
   }
 ]
