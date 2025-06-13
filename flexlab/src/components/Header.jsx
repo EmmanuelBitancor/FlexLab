@@ -4,7 +4,7 @@ function Header({ cart }) {
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <header className="bg-blue-600 text-white p-4">
+    <header className="bg-purple-800 text-white p-4">
       <nav className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">FlexLab</Link>
         <ul className="flex space-x-4">
