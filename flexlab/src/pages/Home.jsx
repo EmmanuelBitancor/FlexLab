@@ -1,17 +1,34 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import products from '../assets/products.json';
 
 function Home() {
-  // Select first 4 products for featured section
+  const [isLoading, setIsLoading] = useState(true);
   const featuredProducts = products.slice(0, 4);
 
+  // Simulate data fetching
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // 2-second delay for demo
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="loader w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 animate-fadeIn">
       {/* Hero Section */}
       <section
         className="relative bg-cover bg-center h-96 flex items-center justify-center"
         style={{
-          backgroundImage: 'url(https://t4.ftcdn.net/jpg/02/49/50/15/360_F_249501541_XmWdfAfUbWAvGxBwAM0ba2aYT36ntlpH.jpg)',
+          backgroundImage: 'url(https://t4.ftcdn.net/jpg/02/49/50/15/360_F_249501541_XmWdfAfUbWAvGxBwAM0ba2caYT36MtlpH.jpg)',
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -32,29 +49,38 @@ function Home() {
           Featured Products
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {featuredProducts.map((product) => (
-            <div key={product.id} className="product-card w-74">
-              <div className="w-full h-48 overflow-hidden rounded-md mb-3">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-800 truncate">
-                {product.name}
-              </h3>
-              <p className="text-gray-600 font-medium mt-1">
-                ${product.price.toFixed(2)}
-              </p>
-              <Link
-                to="/products"
-                className="btn btn-primary mt-3 w-full text-center"
-              >
-                View Product
-              </Link>
-            </div>
-          ))}
+          {isLoading
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <div key={`skeleton-${index}`} className="product-card w-full">
+                  <div className="w-full h-48 bg-gray-200 rounded-md animate-pulse mb-3"></div>
+                  <div className="h-5 bg-gray-300 rounded-full w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-300 rounded-full w-1/2 mb-3 animate-pulse"></div>
+                  <div className="h-10 bg-blue-300 rounded-md animate-pulse"></div>
+                </div>
+              ))
+            : featuredProducts.map((product) => (
+                <div key={product.id} className="product-card w-full">
+                  <div className="w-full h-48 overflow-hidden rounded-md mb-3">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800 truncate">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-600 font-medium mt-1">
+                    ${product.price.toFixed(2)}
+                  </p>
+                  <Link
+                    to="/products"
+                    className="btn btn-primary mt-3 w-full text-center"
+                  >
+                    View Product
+                  </Link>
+                </div>
+              ))}
         </div>
         <div className="text-center mt-8">
           <Link to="/products" className="btn btn-secondary px-10 py-5 text-lg">
