@@ -16,7 +16,7 @@ function Header() {
   };
 
   return (
-    <header className="bg-purple-800 text-white p-4 fixed top-0 left-0 w-full z-50">
+    <header className="bg-black text-white p-4 fixed top-0 left-0 w-full z-50">
       <nav className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">FlexLab</Link>
         
@@ -42,7 +42,7 @@ function Header() {
             md:flex md:space-x-4 md:items-center
             ${isDropdownOpen ? 'flex' : 'hidden'} 
             flex-col md:flex-row absolute md:static top-14 right-0 w-48 md:w-auto 
-            bg-purple-900 md:bg-transparent shadow-lg md:shadow-none 
+            bg-black md:bg-transparent shadow-lg md:shadow-none 
             p-4 md:p-0 rounded-lg md:rounded-none z-50
           `}>
             <li className="py-2 md:py-0">
@@ -116,8 +116,8 @@ function Header() {
                 <ul className={`
                   ${isProfileDropdownOpen ? 'flex' : 'hidden'} 
                   flex-col absolute top-full right-0 w-48 md:w-32 
-                  bg-purple-800 shadow-lg p-4 rounded-lg z-[60]
-                  md:bg-purple-900 md:shadow-lg md:p-2 md:rounded-lg
+                  bg-black shadow-lg p-4 rounded-lg z-[60]
+                  md:bg-black md:shadow-lg md:p-2 md:rounded-lg
                 `}>
                   <li className="py-2">
                     <Link 

@@ -49,7 +49,8 @@ function App() {
           element={
             <div className="flex flex-col min-h-screen bg-gray-100">
               <Header cart={cart} />
-              <main className="flex-grow">
+              <main className="flex-grow pt-14 md:pt-14">
+                {/* pt-14 ≈ 56px to offset fixed header */}
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<ProductList addToCart={addToCart} />} />
