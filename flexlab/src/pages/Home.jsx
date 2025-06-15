@@ -1,37 +1,76 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import products from '../assets/products.json';
-// Import images from assets
 import image1 from '../assets/hero1.png';
 import image2 from '../assets/hero2.png';
-import image3 from '../assets/hero3.png';
-import image4 from '../assets/hero4.png';
-import image5 from '../assets/hero5.png';
-import bgImage from '../assets/img2.png'; // Import background image
+import image3 from '../assets/3.png';
+import image4 from '../assets/4.png';
+import image5 from '../assets/5.png';
+import bgImage from '../assets/img4.png';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [animationKey, setAnimationKey] = useState(0);
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+  const heroRef = useRef(null);
   const featuredProducts = products.slice(0, 4);
-  const heroImages = [image1, image2, image3, image4, image5]; // Array of imported images
+  const heroImages = [image1, image2, image3, image4, image5];
+  const text = "Welcome to FlexLab";
+  const characters = text.split('');
 
-  // Simulate data fetching
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // 2-second delay for demo
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Image swapping animation
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => 
         prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
     return () => clearInterval(interval);
   }, [heroImages.length]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setIsHeroVisible(entries[0].isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let scrollTimeout;
+    
+    const handleScroll = () => {
+      if (isHeroVisible) {
+        setAnimationKey((prevKey) => prevKey + 1);
+      }
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {}, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [isHeroVisible]);
 
   if (isLoading) {
     return (
@@ -43,9 +82,9 @@ function Home() {
 
   return (
     <div className="bg-gray-100 animate-fadeIn pt-[60px] sm:pt-0">
-      {/* Hero Section */}
       <section
-        className="relative h-[450px] sm:h-[550px] md:h-[650px] flex items-center"
+        ref={heroRef}
+        className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex items-center"
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: 'cover',
@@ -55,27 +94,39 @@ function Home() {
       >
         <style>
           {`
-            .typing-animation {
-              display: inline-block;
-              overflow: hidden;
-              white-space: nowrap;
-              opacity: 0;
-              animation: typing 3s steps(20, end) forwards;
+            .typing-container {
+              display: inline-flex;
               position: relative;
+              white-space: nowrap;
               max-width: 100%;
+              visibility: visible;
             }
-            .typing-animation::after {
+            .typing-character {
+              display: inline-block;
+              opacity: 0;
+              animation: typeLetter 0.1s ease-in forwards;
+              visibility: visible;
+              min-width: 0.2em;
+            }
+            .typing-character.space {
+              min-width: 0.5em;
+            }
+            @keyframes typeLetter {
+              from { opacity: 0; transform: translateY(10px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            .typing-cursor::after {
               content: '|';
               position: absolute;
-              right: 0;
-              animation: blink 0.75s step-end infinite;
-            }
-            @keyframes typing {
-              from { width: 0; opacity: 1; }
-              to { width: 100%; opacity: 1; }
+              right: -0.5rem;
+              top: 0;
+              color: transparent;
+              font-weight: bold;
+              animation: blink 0.6s step-end infinite;
+              visibility: visible;
             }
             @keyframes blink {
-              0% { opacity: 0; }
+              50% { opacity: 0; }
             }
             .fade-in {
               animation: fadeIn 1s ease-in-out 0.5s forwards;
@@ -89,12 +140,12 @@ function Home() {
               animation: imageFade 1s ease-in-out;
             }
             @keyframes imageFade {
-              0% { opacity: 0; }
-              100% { opacity: 1; }
+              0% { opacity: 0; transform: scale(0.95); }
+              100% { opacity: 1; transform: scale(1); }
             }
             .hero-image-container {
-              width: 300px;
-              height: 300px;
+              width: 400px;
+              height: 400px;
               overflow: hidden;
               display: flex;
               align-items: center;
@@ -105,27 +156,86 @@ function Home() {
               max-height: 100%;
               object-fit: contain;
             }
+            /* Responsive background image and hero section */
+            @media (max-width: 640px) {
+              .typing-container {
+                max-width: 90vw;
+              }
+              .typing-character {
+                font-size: 1.25rem;
+              }
+              section[style*="background-image"] {
+                background-size: cover;
+                background-position: 60% center; /* Slight offset for better mobile focus */
+              }
+              .hero-image-container {
+                width: 150px;
+                height: 150px;
+              }
+            }
             @media (min-width: 640px) {
               .hero-image-container {
-                width: 400px;
-                height: 400px;
+                width: 250px;
+                height: 250px;
+              }
+              .typing-character {
+                font-size: 1.75rem;
+              }
+              section[style*="background-image"] {
+                background-size: cover;
+                background-position: center;
               }
             }
             @media (min-width: 768px) {
+              .hero-image-container {
+                width: 350px;
+                height: 350px;
+              }
+              .typing-character {
+                font-size: 2.5rem;
+              }
+              section[style*="background-image"] {
+                background-size: cover;
+                background-position: center;
+              }
+            }
+            @media (min-width: 1024px) {
+              .typing-character {
+                font-size: 3rem;
+              }
+              section[style*="background-image"] {
+                background-size: cover;
+                background-position: center;
+              }
               .hero-image-container {
                 width: 500px;
                 height: 500px;
               }
             }
+            /* Individual character delays */
+            ${characters.map((_, index) => `
+              .typing-character:nth-child(${index + 1}) {
+                animation-delay: ${index * 0.1}s;
+              }
+            `).join('')}
           `}
         </style>
         <div className="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8 justify-center relative z-10 pt-6 sm:pt-0">
           <div className="md:w-1/2 text-left text-black mb-4 sm:mb-6 md:mb-0 pr-0 sm:pr-2 md:pr-4">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4 typing-animation">
-              Welcome to FlexLab
-            </h1>
+            <div className="typing-container">
+              <h1 className="text-2xl sm:text-2xl md:text-5xl font-bold mb-2 sm:mb-4" key={`typing-${animationKey}`}>
+                {characters.map((char, index) => (
+                  <span
+                    key={`${char}-${index}-${animationKey}`}
+                    className={`typing-character ${char === ' ' ? 'space' : ''} ${index === characters.length - 1 ? 'typing-cursor' : ''}`}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </h1>
+            </div>
             <p className="text-base sm:text-lg md:text-xl mb-4 sm:mb-6 max-w-xl sm:max-w-2xl fade-in">
-              Discover our curated collection of high-quality products designed to enhance your lifestyle.
+              Discover our curated collection of high-quality products<br/>designed to enhance your lifestyle.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link
@@ -147,13 +257,12 @@ function Home() {
               src={heroImages[currentImageIndex]}
               alt={`Hero Image ${currentImageIndex + 1}`}
               className="hero-image rounded-lg image-swap"
-              key={currentImageIndex} // Key ensures re-render for animation
+              key={currentImageIndex}
             />
           </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
       <section className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
           Featured Products
@@ -201,7 +310,7 @@ function Home() {
                 ))
               : [
                   ...featuredProducts,
-                  ...featuredProducts, // Duplicate for seamless loop
+                  ...featuredProducts,
                 ].map((product, index) => (
                   <div key={`${product.id}-${index}`} className="product-card">
                     <div className="w-full h-40 sm:h-48 overflow-hidden rounded-md mb-3">
@@ -234,7 +343,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Benefits Section */}
       <section className="bg-white py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
@@ -311,7 +419,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter Signup Section */}
       <section className="bg-purple-600 text-white py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
