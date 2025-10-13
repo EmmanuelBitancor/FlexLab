@@ -16,7 +16,7 @@ function Home() {
   const heroRef = useRef(null);
   const featuredProducts = products.slice(0, 4);
   const heroImages = [image1, image2, image3, image4, image5];
-  const text = "Welcome to FlexLab";
+  const text = "Welcome to FlexWear";
   const characters = text.split('');
 
   useEffect(() => {
@@ -263,7 +263,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <section className="container mx-auto px-8 sm:px-6 py-8 sm:py-8">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">
           Featured Products
         </h2>
