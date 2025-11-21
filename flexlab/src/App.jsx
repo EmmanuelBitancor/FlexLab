@@ -7,6 +7,7 @@ import ProductList from './pages/ProductList';
 import CartPage from './pages/CartPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import About from './pages/About';
 import './styles/main.css';
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
                     path="/cart"
                     element={<CartPage cart={cart} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />}
                   />
+                  <Route path="/about" element={<About />} />
                 </Routes>
               </main>
               <Footer />

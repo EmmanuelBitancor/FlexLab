@@ -18,7 +18,7 @@ function Header() {
   return (
     <header className="bg-black text-white p-4 fixed top-0 left-0 w-full z-50">
       <nav className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold">FlexLab</Link>
+        <Link to="/" className="text-xl font-bold">FlexWear</Link>
         
         {/* Dropdown button with hamburger/close icon for mobile */}
         <div className="relative">
@@ -133,7 +133,7 @@ function Header() {
                   </li>
                   <li className="py-2">
                     <Link 
-                      to="/signup" 
+                      to="/register" 
                       className="flex items-center space-x-2 text-white hover:text-gray-200"
                       onClick={() => {
                         setIsDropdownOpen(false);
